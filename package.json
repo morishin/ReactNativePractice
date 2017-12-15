@@ -6,7 +6,9 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "test": "jest"
+    "test": "jest",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "format": "prettier --find-config-path --write 'src/**/*.tsx'"
   },
   "dependencies": {
     "@types/jest": "^21.1.8",
