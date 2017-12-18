@@ -1,4 +1,4 @@
-import App from './App';
+import Qiita from './Qiita';
 import { AppRegistry } from 'react-native';
 
-AppRegistry.registerComponent('ReactNativePractice', () => App);
+AppRegistry.registerComponent('ReactNativePractice', () => Qiita);
