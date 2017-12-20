@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'react';
 import {
   ActivityIndicator,
   Text,
@@ -8,25 +8,25 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
   RefreshControl
-} from 'react-native'
-import { ListItem } from 'react-native-elements'
+} from 'react-native';
+import { ListItem } from 'react-native-elements';
 
 interface Props {}
 
 interface State {
-  isLoading: boolean
-  posts: Post[]
-  nextPage: number
+  isLoading: boolean;
+  posts: Post[];
+  nextPage: number;
 }
 
 interface Post {
-  id: string
-  title: string
-  likes_count: number
+  id: string;
+  title: string;
+  likes_count: number;
   user: {
-    id: string
-    profile_image_url: string
-  }
+    id: string;
+    profile_image_url: string;
+  };
 }
 
 const styles = StyleSheet.create({
@@ -36,20 +36,20 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingHorizontal: 15
   }
-})
+});
 
 export default class Qiita extends React.Component<Props, State> {
   constructor(props: Props) {
-    super(props)
+    super(props);
     this.state = {
       isLoading: false,
       posts: [],
       nextPage: 1
-    }
+    };
   }
 
   public componentDidMount() {
-    this.loadData(true)
+    this.loadData(true);
   }
 
   public render() {
@@ -71,54 +71,70 @@ export default class Qiita extends React.Component<Props, State> {
           )}
           refreshControl={
             <RefreshControl
-                refreshing={this.state.isLoading}
-                onRefresh={() => this.onRefresh(this)}
-                tintColor="#555"
-                titleColor="#555"
-             />
+              refreshing={this.state.isLoading}
+              onRefresh={() => this.onRefresh(this)}
+              tintColor="#555"
+              titleColor="#555"
+            />
           }
-          ListFooterComponent={ this.state.isLoading ? <ActivityIndicator /> : null }
+          ListFooterComponent={
+            this.state.isLoading ? <ActivityIndicator /> : null
+          }
         />
       </View>
-    )
+    );
   }
 
-  private async fetchPosts(page: number, perPage: number = 20): Promise<[Post]> {
-    const posts = await fetch(`https://qiita.com/api/v2/items?page=${page}&per_page=${perPage}`)
-                          .then(response => response.json())
-    return posts
+  private async fetchPosts(
+    page: number,
+    perPage: number = 20
+  ): Promise<[Post]> {
+    const posts = await fetch(
+      `https://qiita.com/api/v2/items?page=${page}&per_page=${perPage}`
+    ).then(response => response.json());
+    return posts;
   }
 
-  private onScroll(self: Qiita, event?: NativeSyntheticEvent<NativeScrollEvent>): void {
-    if (event === undefined) { return }
-    const nativeEvent = event.nativeEvent
-    if (nativeEvent.contentOffset.y >= nativeEvent.contentSize.height - nativeEvent.layoutMeasurement.height) {
-      self.loadData(false)
+  private onScroll(
+    self: Qiita,
+    event?: NativeSyntheticEvent<NativeScrollEvent>
+  ): void {
+    if (event === undefined) {
+      return;
+    }
+    const nativeEvent = event.nativeEvent;
+    if (
+      nativeEvent.contentOffset.y >=
+      nativeEvent.contentSize.height - nativeEvent.layoutMeasurement.height
+    ) {
+      self.loadData(false);
     }
   }
 
   private onRefresh(self: Qiita): void {
-    self.loadData(true)
+    self.loadData(true);
   }
 
   private loadData(refresh: boolean): void {
-    if (this.state.isLoading) { return }
-    this.setState({isLoading: true})
+    if (this.state.isLoading) {
+      return;
+    }
+    this.setState({ isLoading: true });
     this.fetchPosts(this.state.nextPage)
       .then(posts => {
         this.setState(previousState => {
           return {
             isLoading: false,
-            posts: refresh ? posts :previousState.posts.concat(posts),
+            posts: refresh ? posts : previousState.posts.concat(posts),
             nextPage: previousState.nextPage + 1
-          }
-        })
+          };
+        });
       })
       .catch(error => {
-        console.error(error)
+        console.error(error);
         this.setState(previousState => {
-          return { isLoading: false }
-        })
-      })
+          return { isLoading: false };
+        });
+      });
   }
 }
