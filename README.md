@@ -17,7 +17,7 @@ Almost the same as https://github.com/Microsoft/TypeScript-React-Native-Starter
 - `mv index.js src` `mv App.js src` `mv ./__tests__/ ./src/__tests__/`
 - `touch index.js` and write `import './src/index';` into the `index.js`
 - Try to run `react-native run-ios` (or `run-android`)
-- `yarn add typescript`
+- `yarn add --dev typescript`
 - `tsc --init --pretty --sourceMap --target es2015 --outDir ./lib --module commonjs --jsx react`
 - Append `"include": ["./src/"]` into `tsconfig.json`
 - Replace `import './src/index';` with `import './lib/index';` in `ReactNativePractice/index.js`
@@ -45,7 +45,7 @@ Almost the same as https://github.com/Microsoft/TypeScript-React-Native-Starter
     }
     ```
 
-- `yarn add @types/jest @types/react @types/react-native @types/react-test-renderer`
+- `yarn add --dev @types/jest @types/react @types/react-native @types/react-test-renderer`
 - Change the file extensions of `src/index.js`, `src/App.js` and `src/__tests__/App.js` from `.js` to `.tsx`
 - Modify `src/App.tsx`
     - Replace `import React, {Component} from 'react';` with `import * as React from 'react';`
